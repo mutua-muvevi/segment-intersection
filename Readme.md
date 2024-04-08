@@ -1,0 +1,1 @@
+When given four points (x and y axis) A, B, C and D and draw aline from A, B and C, D how do we calculate the point where the two lines line AB and lice CD intersect?
