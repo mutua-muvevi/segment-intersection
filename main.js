@@ -5,7 +5,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 //points
-const A = { x: 200, y: 150 };
+const A = { x: 200, y: 50 };
 const B = { x: 150, y: 250 };
 const C = { x: 50, y: 100 };
 const D = { x: 250, y: 200 };
@@ -45,8 +45,41 @@ function animate() {
 
 	drawDot(M, "M", t<0 || t>1);
 	drawDot(N, "N", t<0 || t>1);
+
+	const I = getIntersection(A, B, C, D);
+	drawDot(I, "I");
+
 	t += 0.005;
 	requestAnimationFrame(animate);
+}
+
+function getIntersection (A, B, C, D){
+/**
+ * formula for getting the intersection
+ * Ix = Ax + t(Bx - Ax) = Cx + u(Dx - Cx) formula for geting x coordinate of intersection I
+ * Iy = Ay + t(By - Ay) = Cy + u(Dy - Cy) formula for geting y coordinate of intersection I
+ * 
+ * simplification
+ * Ix = Ax - Cx + (Bx - Ax)t = (Dx - Cx)u
+ * Iy = Ay - Cy + (By - Ay)t = (Dy - Cy)u
+ * 
+ * get the value of t
+ * top = (Dx - Cx)(Ay - Cy)-(Dy-Cy)(Ax-Cx)
+ * bottom = (Dy-Cy)(Bx-Ax)-(Dx-Cx)(By-Ay)
+ * t =  top / bottom
+
+ */
+
+	const top = (D.x - C.x)*(A.y - C.y) - (D.y - C.y)*(A.x - C.x);
+	const bottom = (D.y - C.y)*(B.x - A.x) - (D.x - C.x)*(B.y - A.y);
+	const t = top / bottom;
+
+	// returning the point of intersection
+	return {
+		x: lerp(A.x, B.x, t),
+		y: lerp(A.y, B.y, t)
+	}
+
 }
 
 function drawDot(point, label, isRed) {
