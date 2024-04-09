@@ -66,15 +66,35 @@ function getIntersection(A, B, C, D) {
  * Ix = Ax + t(Bx - Ax) = Cx + u(Dx - Cx) formula for geting x coordinate of intersection I
  * Iy = Ay + t(By - Ay) = Cy + u(Dy - Cy) formula for geting y coordinate of intersection I
  * 
- * simplification
- * Ix = Ax - Cx + (Bx - Ax)t = (Dx - Cx)u
- * Iy = Ay - Cy + (By - Ay)t = (Dy - Cy)u
- * 
  * get the value of t
- * top = (Dx - Cx)(Ay - Cy)-(Dy-Cy)(Ax-Cx)
+ * 
+ * >>> moved the  Cx and Cy to the other side of the equation
+ * Ax - Cx + (Bx - Ax)t = (Dx - Cx)u
+ * Ay - Cy + (By - Ay)t = (Dy - Cy)u
+ * 
+ * >>> multiply the Iy by Dx-Cx because we want to get rid of the u
+ * (Ay -Cy)(Dx - Cx) + (Dx - Cx)(By - Cy)t = (Dy - Cy)(Dx - Cx)u
+ * 
+ * >>> as we see from the equation in line 73the value of u is Ay - Cy + (By - Ay)t
+ * >>> we substitute (Dx - Cx)u with (Ay -Cy)(Dx - Cx) + (Dx - Cx)(By - Cy)t in line 76
+ * (Ay - Cy)(Dx - Cx) + (Dx - Cx)(By - Cy)t = (Dy - Cy)(Ax - Cx + (Bx - Ax)t)
+ * 
+ * >>> we solve for the other side of the eqn
+ * (Ay - Cy)(Dx - Cx) + (Dx - Cx)(By - Cy)t = (Dy - Cy)(Ax - Cx) + (Dy - Cy)(Bx - Ax)t
+ * 
+ * >>> we group t on one side of the equation
+ * (Ay - Cy)(Dx - Cx) - (Dy - Cy)(Ax - Cx) = (Dy - Cy)(Bx - Ax)t - (Dx - Cx)(By - Cy)t
+ * 
+ * >> get the value of t 
+ * t = (Ay - Cy)(Dx - Cx) - (Dy - Cy)(Ax - Cx) / (Dy - Cy)(Bx - Ax)t - (Dx - Cx)(By - Cy)
+ * 
+ * for programing and code structure purpose we put them in top and bottom variables as below 
+ * ttop = (Dx - Cx)(Ay - Cy)-(Dy-Cy)(Ax-Cx)
  * bottom = (Dy-Cy)(Bx-Ax)-(Dx-Cx)(By-Ay)
- * t =  top / bottom
-
+ * t =  ttop / bottom
+ * 
+ * Now we do the same to find the value of u
+ * 
  */
 
 	const tTop = (D.x - C.x) * (A.y - C.y) - (D.y - C.y) * (A.x - C.x);
